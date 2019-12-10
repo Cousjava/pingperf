@@ -1,0 +1,7 @@
+FROM open-liberty:kernel
+
+ADD --chown=1001:0 ./target/pingperf.tar.gz /opt/ol
+COPY --chown=1001:0 ./target/pingperf.war /config/dropins/pingperf.war
+
+ENV JAVA_OPTS "$JAVA_OPTS -Djava.net.preferIPv4Stack=true"
+ENTRYPOINT ["/opt/ol/wlp/bin/server", "run"]

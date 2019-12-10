@@ -1,0 +1,15 @@
+FROM hotswapagent/hotswap-vm
+#FROM adoptopenjdk:11-jre-openj9
+COPY ./target/pingperf-microbundle.jar /work/application.jar
+#COPY ./target/lib /work/lib
+ENV JAVA_OPTS "$JAVA_OPTS -Djava.net.preferIPv4Stack=true -Xmx128m"
+ENTRYPOINT java ${JAVA_OPTS}  -jar /work/application.jar --nocluster
+WORKDIR /opt
+EXPOSE 8080 8080
+
+#FROM payara/micro
+
+#ADD ./target/pingperf.war /opt/payara/deployments
+
+#ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=90.0", "-jar", "payara-micro.jar"]
+#CMD ["--deploymentDir", "/opt/payara/deployments", "--nocluster"]
